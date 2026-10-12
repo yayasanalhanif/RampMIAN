@@ -19,6 +19,14 @@
         .pdf-container::-webkit-scrollbar { width: 8px; }
         .pdf-container::-webkit-scrollbar-track { background: #f1f1f1; }
         .pdf-container::-webkit-scrollbar-thumb { background: #10b981; border-radius: 4px; }
+
+        /* Efek Zebra Striping yang Soft menyesuaikan Tema & Dark Mode */
+        #tableBody tr:nth-child(even) {
+          background-color: var(--color-primary-light);
+        }
+        .dark #tableBody tr:nth-child(even) {
+          background-color: rgba(255, 255, 255, 0.02);
+        }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen font-sans">
@@ -309,7 +317,20 @@
         };
 
         document.addEventListener('DOMContentLoaded', initDashboard);
-
+        function maskName(name) {
+          if (!name) return "Hamba Allah";
+          let cleanName = name.trim();
+          const exceptions = ['HAMBA ALLAH', 'FLIP', 'OVO', 'GOPAY', 'DANA', 'SHOPEEPAY', 'LINKAJA', 'SPAY', 'QRIS'];
+          if (exceptions.includes(cleanName.toUpperCase())) return cleanName.toUpperCase();
+          
+          let words = cleanName.split(' ');
+          let maskedWords = words.map(word => {
+            if (word.length <= 1) return word;
+            if (word.length === 2) return word[0] + '*';
+            return word[0] + '*'.repeat(word.length - 2) + word[word.length - 1];
+          });
+          return maskedWords.join(' ');
+        }
     </script>
 </body>
 </html>
